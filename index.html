@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegance Decor - Penyewaan Dekorasi Pengantin</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* CSS VARIABLES */
+    :root {
+      --color-primary: #D4AF37;
+      --color-primary-light: #F9F1D8;
+      --color-secondary: #FFD1DC;
+      --color-secondary-light: #FFF0F3;
+      --color-white: #FFFFFF;
+      --color-gray-50: #F9FAFB;
+      --color-gray-100: #F3F4F6;
+      --color-gray-200: #E5E7EB;
+      --color-gray-300: #D1D5DB;
+      --color-gray-400: #9CA3AF;
+      --color-gray-500: #6B7280;
+      --color-gray-600: #4B5563;
+      --color-gray-700: #374151;
+      --color-gray-800: #1F2937;
+      --color-gray-900: #111827;
+      
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Outfit', sans-serif;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-gold: 0 4px 14px 0 rgba(212, 175, 55, 0.39);
+      
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-gray-800); background-color: var(--color-gray-50); line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--color-gray-900); }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: var(--font-body); border: none; outline: none; }
+
+    /* UTILITIES */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .text-center { text-align: center; }
+    .section-title { font-size: 2.5rem; margin-bottom: 3rem; text-align: center; position: relative; }
+    .section-title::after { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:60px; height:3px; background:var(--color-primary); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 500; transition: 0.3s; }
+    .btn-primary { background: var(--color-primary); color: white; box-shadow: var(--shadow-gold); }
+    .btn-primary:hover { background: #b5952f; transform: translateY(-2px); }
+    .btn-outline { border: 1px solid var(--color-primary); color: var(--color-primary); background: transparent; }
+    .btn-outline:hover { background: var(--color-primary-light); }
+    .section { padding: 5rem 0; }
+    .d-none { display: none !important; }
+
+    /* NAVBAR */
+    .navbar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: var(--shadow-sm); padding: 1rem 0; }
+    .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-weight: 500; transition: 0.3s; }
+    .nav-links a:hover { color: var(--color-primary); }
+    .mobile-menu-btn { display: none; font-size: 1.5rem; background: none; }
+
+    /* HERO */
+    .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+    .hero h1 { font-size: 4rem; color: white; margin-bottom: 1rem; }
+    .hero p { font-size: 1.25rem; margin-bottom: 2rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-img { border-radius: var(--radius-lg); width: 100%; border: 3px solid var(--color-primary-light); }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .feature-card { background: white; padding: 1.5rem; border-radius: var(--radius-md); text-align: center; box-shadow: var(--shadow-sm); }
+    .feature-card i { font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem; }
+
+    /* PACKAGES */
+    .packages { background: var(--color-secondary-light); }
+    .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .package-card { background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); transition: 0.3s; }
+    .package-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+    .package-img { width: 100%; height: 200px; object-fit: cover; }
+    .package-content { padding: 2rem; }
+    .package-price { font-size: 1.8rem; color: var(--color-primary); font-weight: 700; margin: 1rem 0; }
+    .package-features { margin-bottom: 1.5rem; }
+    .package-features li { margin-bottom: 0.5rem; color: var(--color-gray-600); }
+    .package-features i { color: var(--color-primary); margin-right: 0.5rem; }
+
+    /* GALLERY */
+    .gallery-filter { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .filter-btn { padding: 0.5rem 1.5rem; border-radius: var(--radius-full); border: 1px solid var(--color-gray-300); background: white; }
+    .filter-btn.active, .filter-btn:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+    .gallery-item { border-radius: var(--radius-md); overflow: hidden; height: 250px; position: relative; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; transition: 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* BOOKING */
+    .booking { background: var(--color-primary-light); }
+    .booking-form { background: white; padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); max-width: 800px; margin: 0 auto; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-control { padding: 0.75rem; border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); font-family: inherit; }
+    .form-control:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(212,175,55,0.2); }
+
+    /* TESTIMONIALS */
+    .testimonials { background: white; }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .testi-card { background: var(--color-gray-50); padding: 2rem; border-radius: var(--radius-md); position: relative; }
+    .testi-card i.fa-quote-left { font-size: 2rem; color: var(--color-primary-light); position: absolute; top: 1rem; right: 1rem; }
+    .testi-author { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+    .testi-author img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+
+    /* FOOTER */
+    .footer { background: var(--color-gray-900); color: var(--color-gray-300); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 2rem; }
+    .footer h3 { color: white; margin-bottom: 1.5rem; }
+    .footer-links li { margin-bottom: 0.5rem; }
+    .footer-links a:hover { color: var(--color-primary); }
+    .socials { display: flex; gap: 1rem; }
+    .socials a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+    .socials a:hover { background: var(--color-primary); transform: translateY(-3px); }
+    .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    /* FLOATING WA */
+    .floating-wa { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: #25D366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: var(--shadow-lg); z-index: 99; transition: 0.3s; }
+    .floating-wa:hover { transform: scale(1.1); color: white; }
+
+    /* ADMIN DASHBOARD */
+    #admin-app { display: flex; min-height: 100vh; background: var(--color-gray-100); }
+    .admin-sidebar { width: 250px; background: var(--color-gray-900); color: white; padding: 1.5rem 0; position: fixed; height: 100vh; overflow-y: auto; }
+    .admin-brand { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-primary); text-align: center; margin-bottom: 2rem; padding: 0 1rem; }
+    .admin-menu { list-style: none; }
+    .admin-menu li a { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--color-gray-300); transition: 0.3s; }
+    .admin-menu li a:hover, .admin-menu li a.active { background: var(--color-gray-800); color: var(--color-primary); border-left: 4px solid var(--color-primary); }
+    
+    .admin-main { flex: 1; margin-left: 250px; padding: 2rem; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; background: white; padding: 1rem 2rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: white; padding: 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; }
+    .stat-info h4 { color: var(--color-gray-500); font-family: var(--font-body); font-size: 1rem; font-weight: 500; }
+    .stat-info h2 { font-size: 2rem; margin-top: 0.5rem; }
+    .stat-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+
+    .admin-card { background: white; padding: 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: 2rem; }
+    .admin-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .table-responsive { overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th, .admin-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--color-gray-200); }
+    .admin-table th { background: var(--color-gray-50); font-weight: 600; color: var(--color-gray-700); }
+    .badge { padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 500; }
+    .badge-pending { background: #fef3c7; color: #d97706; }
+    .badge-approved { background: #d1fae5; color: #059669; }
+    
+    .admin-actions button { background: none; border: none; font-size: 1.1rem; margin-right: 0.5rem; color: var(--color-gray-500); cursor: pointer; }
+    .admin-actions button:hover { color: var(--color-primary); }
+    .admin-actions button.btn-delete:hover { color: #dc2626; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .modal-content { background: white; padding: 2rem; border-radius: var(--radius-md); width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-gray-200); padding-bottom: 1rem; }
+    .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-gray-500); }
+    .modal-close:hover { color: var(--color-gray-900); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .about-grid, .form-grid { grid-template-columns: 1fr; }
+      .admin-sidebar { transform: translateX(-100%); transition: 0.3s; z-index: 1001; }
+      .admin-sidebar.active { transform: translateX(0); }
+      .admin-main { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== CLIENT APP ==================== -->
+  <div id="client-app">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="#" class="nav-brand"><i class="fa-solid fa-ring"></i> Elegance Decor</a>
+        <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('d-none')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#tentang">Tentang Kami</a></li>
+          <li><a href="#paket">Paket</a></li>
+          <li><a href="#galeri">Galeri</a></li>
+          <li><a href="#booking">Booking</a></li>
+          <li><a href="#testimoni">Testimoni</a></li>
+          <li><a href="#" onclick="showAdmin()">Login Admin</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="beranda" class="hero">
+      <div class="container">
+        <h1>Wujudkan Pernikahan Impian Anda</h1>
+        <p>Dekorasi elegan, mewah, dan berkesan untuk momen terpenting dalam hidup Anda.</p>
+        <div class="hero-buttons">
+          <a href="#paket" class="btn btn-primary">Lihat Paket</a>
+          <a href="#booking" class="btn btn-outline" style="color:white; border-color:white;">Booking Sekarang</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tentang Kami -->
+    <section id="tentang" class="section">
+      <div class="container about-grid">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Tentang Kami" class="about-img">
+        <div>
+          <h2>Tentang Elegance Decor</h2>
+          <br>
+          <p>Elegance Decor adalah penyedia jasa dekorasi pernikahan premium yang telah berpengalaman lebih dari 5 tahun. Kami berkomitmen untuk menyulap setiap venue menjadi tempat yang magis dan tak terlupakan.</p>
+          <div class="features">
+            <div class="feature-card">
+              <i class="fa-solid fa-crown"></i>
+              <h4>Desain Premium</h4>
+            </div>
+            <div class="feature-card">
+              <i class="fa-solid fa-clock"></i>
+              <h4>Tepat Waktu</h4>
+            </div>
+            <div class="feature-card">
+              <i class="fa-solid fa-handshake"></i>
+              <h4>Profesional</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Paket Dekorasi -->
+    <section id="paket" class="section packages">
+      <div class="container">
+        <h2 class="section-title">Paket Dekorasi</h2>
+        <div class="packages-grid" id="client-packages-container">
+          <!-- Packages injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Galeri -->
+    <section id="galeri" class="section">
+      <div class="container">
+        <h2 class="section-title">Galeri Karya Kami</h2>
+        <div class="gallery-filter" id="gallery-filters">
+          <button class="filter-btn active" onclick="filterGallery('Semua', this)">Semua</button>
+          <button class="filter-btn" onclick="filterGallery('Modern', this)">Modern</button>
+          <button class="filter-btn" onclick="filterGallery('Klasik', this)">Klasik</button>
+          <button class="filter-btn" onclick="filterGallery('Rustic', this)">Rustic</button>
+        </div>
+        <div class="gallery-grid" id="client-gallery-container">
+          <!-- Gallery injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section id="booking" class="section booking">
+      <div class="container">
+        <h2 class="section-title">Form Booking</h2>
+        <form class="booking-form" id="form-booking" onsubmit="submitBooking(event)">
+          <div class="form-grid">
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" class="form-control" required></div>
+            <div class="form-group"><label>No. WhatsApp</label><input type="tel" class="form-control" required></div>
+            <div class="form-group"><label>Email</label><input type="email" class="form-control" required></div>
+            <div class="form-group"><label>Tanggal Acara</label><input type="date" class="form-control" required></div>
+            <div class="form-group full"><label>Lokasi Acara</label><input type="text" class="form-control" required></div>
+            <div class="form-group"><label>Pilihan Paket</label>
+              <select class="form-control" id="booking-paket-select" required></select>
+            </div>
+            <div class="form-group"><label>Tema Dekorasi</label><input type="text" class="form-control" placeholder="Contoh: Rustic Putih Emas"></div>
+            <div class="form-group"><label>Jumlah Tamu</label><input type="number" class="form-control"></div>
+            <div class="form-group"><label>Metode Pembayaran</label>
+              <select class="form-control">
+                <option>Transfer Bank BCA</option>
+                <option>Transfer Bank Mandiri</option>
+                <option>Cash di Kantor</option>
+              </select>
+            </div>
+            <div class="form-group full"><label>Catatan Tambahan</label><textarea class="form-control"></textarea></div>
+            <div class="form-group full"><label>Upload Bukti DP (Opsional)</label><input type="file" class="form-control"></div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Kirim Booking</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section id="testimoni" class="section testimonials">
+      <div class="container">
+        <h2 class="section-title">Apa Kata Mereka</h2>
+        <div class="testi-grid" id="client-testi-container">
+          <!-- Testi injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="kontak">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3>Elegance Decor</h3>
+            <p>Jasa dekorasi pernikahan premium yang mewujudkan hari impian Anda dengan sentuhan elegan dan mewah.</p>
+            <div class="socials" style="margin-top: 1rem;">
+              <a href="#" onclick="alert('Menuju Instagram')"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" onclick="alert('Menuju Facebook')"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" onclick="alert('Menuju TikTok')"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+          </div>
+          <div>
+            <h3>Kontak Kami</h3>
+            <ul class="footer-links">
+              <li><i class="fa-solid fa-map-marker-alt"></i> Jl. Pengantin Raya No.12, Jakarta</li>
+              <li><i class="fa-solid fa-phone"></i> +62 812-3456-7890</li>
+              <li><i class="fa-solid fa-envelope"></i> info@elegancedecor.com</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Tautan Cepat</h3>
+            <ul class="footer-links">
+              <li><a href="#beranda">Beranda</a></li>
+              <li><a href="#paket">Paket Dekorasi</a></li>
+              <li><a href="#galeri">Galeri</a></li>
+              <li><a href="#booking">Booking</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Elegance Decor. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating WA -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="floating-wa" title="Hubungi Kami di WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+  </div>
+
+
+  <!-- ==================== ADMIN APP ==================== -->
+  <div id="admin-app" class="d-none">
+    
+    <aside class="admin-sidebar">
+      <div class="admin-brand"><i class="fa-solid fa-ring"></i> Admin Panel</div>
+      <ul class="admin-menu">
+        <li><a href="#" class="active" onclick="showAdminSection('dashboard', this)"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+        <li><a href="#" onclick="showAdminSection('bookings', this)"><i class="fa-solid fa-calendar-check"></i> Data Booking</a></li>
+        <li><a href="#" onclick="showAdminSection('packages', this)"><i class="fa-solid fa-box"></i> Data Paket</a></li>
+        <li><a href="#" onclick="showAdminSection('customers', this)"><i class="fa-solid fa-users"></i> Pelanggan</a></li>
+        <li><a href="#" onclick="showClient()"><i class="fa-solid fa-globe"></i> Lihat Website</a></li>
+      </ul>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <h2>Dashboard</h2>
+        <div>
+          <button class="btn btn-outline" onclick="showClient()">Logout <i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+      </header>
+
+      <!-- SECTION: Dashboard -->
+      <div id="admin-section-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-info"><h4>Total Booking</h4><h2 id="stat-booking">0</h2></div>
+            <div class="stat-icon"><i class="fa-solid fa-calendar"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info"><h4>Total Pelanggan</h4><h2 id="stat-customer">0</h2></div>
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info"><h4>Total Paket</h4><h2 id="stat-package">0</h2></div>
+            <div class="stat-icon"><i class="fa-solid fa-box"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info"><h4>Pendapatan</h4><h2>Rp 120M</h2></div>
+            <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Grafik Booking Bulanan</h3>
+          </div>
+          <canvas id="bookingChart" height="100"></canvas>
+        </div>
+      </div>
+
+      <!-- SECTION: Data Paket -->
+      <div id="admin-section-packages" class="d-none">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Data Paket Dekorasi</h3>
+            <button class="btn btn-primary" onclick="openPackageModal()"><i class="fa-solid fa-plus"></i> Tambah Paket</button>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Gambar</th>
+                  <th>Nama Paket</th>
+                  <th>Kategori</th>
+                  <th>Harga</th>
+                  <th>Fasilitas</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-packages-tbody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: Data Booking -->
+      <div id="admin-section-bookings" class="d-none">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Data Booking</h3>
+            <input type="text" class="form-control" placeholder="Cari booking..." style="width:250px;">
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nama Pelanggan</th>
+                  <th>Tanggal Acara</th>
+                  <th>Paket</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-bookings-tbody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: Customers (Placeholder) -->
+      <div id="admin-section-customers" class="d-none">
+        <div class="admin-card">
+          <h3>Data Pelanggan (Contoh)</h3>
+          <p>Tabel pelanggan dapat dikelola seperti halnya Data Paket dan Booking.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+  <!-- Modal Tambah/Edit Paket -->
+  <div id="packageModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="packageModalTitle">Tambah Paket</h3>
+        <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-times"></i></button>
+      </div>
+      <form id="form-package" onsubmit="savePackage(event)">
+        <input type="hidden" id="pkg-id">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label>Nama Paket</label>
+          <input type="text" id="pkg-name" class="form-control" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label>Kategori (Galeri)</label>
+          <select id="pkg-category" class="form-control" required>
+            <option value="Modern">Modern</option>
+            <option value="Klasik">Klasik</option>
+            <option value="Rustic">Rustic</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label>Harga (Misal: Rp 15.000.000)</label>
+          <input type="text" id="pkg-price" class="form-control" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label>URL Gambar</label>
+          <input type="url" id="pkg-img" class="form-control" required placeholder="https://...">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label>Fasilitas (Pisahkan dengan koma)</label>
+          <textarea id="pkg-features" class="form-control" required placeholder="Pelaminan, Kursi, ..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Paket</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal View Booking -->
+  <div id="bookingModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Detail Booking</h3>
+        <button class="modal-close" onclick="closeModals()"><i class="fa-solid fa-times"></i></button>
+      </div>
+      <div id="bookingDetails">
+        <!-- Rendered via JS -->
+      </div>
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+        <button class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // --- MOCK DATA ---
+    let packagesData = [
+      { id: 1, category: "Modern", name: "Paket Silver", price: "Rp 15.000.000", img: "https://images.unsplash.com/photo-1522413452208-996906271241?auto=format&fit=crop&w=400&q=80", features: ["Pelaminan 6 Meter", "Mini Garden", "Standing Flower 4 Titik", "Kotak Angpao 2"] },
+      { id: 2, category: "Klasik", name: "Paket Gold", price: "Rp 25.000.000", img: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80", features: ["Pelaminan 8 Meter", "Mini Garden Premium", "Standing Flower 6 Titik", "Photo Booth Area", "Kotak Angpao 2"] },
+      { id: 3, category: "Modern", name: "Paket Platinum", price: "Rp 40.000.000", img: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=400&q=80", features: ["Pelaminan 12 Meter Custom", "Garden Full", "Standing Flower 10 Titik", "Photo Booth Premium", "Karpet Rose Petal"] },
+      { id: 4, category: "Rustic", name: "Paket Rustic", price: "Rp 20.000.000", img: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=400&q=80", features: ["Pelaminan Rustic 6M", "Lampu Gantung", "Properti Kayu & Kering", "Photo Booth Rustic"] },
+      { id: 5, category: "Klasik", name: "Paket Classic", price: "Rp 30.000.000", img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80", features: ["Pelaminan Gebyok Putih", "Bunga Melati Tumpuk", "Kursi Tiffany", "Lampu Chandelier"] },
+      { id: 6, category: "Rustic", name: "Paket Intimate", price: "Rp 10.000.000", img: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80", features: ["Backdrop 4 Meter", "Bunga Artificial", "Karpet Standar", "Welcome Sign"] }
+    ];
+
+    let bookingsData = [
+      { id: "BKG-001", name: "Andi Saputra", date: "2026-08-15", package: "Paket Gold", status: "Disetujui" },
+      { id: "BKG-002", name: "Budi Santoso", date: "2026-08-20", package: "Paket Platinum", status: "Menunggu Pembayaran" },
+      { id: "BKG-003", name: "Citra Lestari", date: "2026-09-05", package: "Paket Rustic", status: "Diproses" }
+    ];
+
+    // --- RENDER CLIENT ---
+    function renderClient() {
+      // Packages
+      const pkgContainer = document.getElementById("client-packages-container");
+      const pkgSelect = document.getElementById("booking-paket-select");
+      let pkgHtml = "";
+      let selectHtml = "<option value=''>-- Pilih Paket --</option>";
+      
+      packagesData.forEach(pkg => {
+        let featuresHtml = pkg.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join("");
+        pkgHtml += `
+          <div class="package-card">
+            <img src="${pkg.img}" class="package-img" alt="${pkg.name}">
+            <div class="package-content">
+              <h3>${pkg.name}</h3>
+              <div class="package-price">${pkg.price}</div>
+              <ul class="package-features">${featuresHtml}</ul>
+              <a href="#booking" class="btn btn-primary" style="width:100%;">Pesan Sekarang</a>
+            </div>
+          </div>
+        `;
+        selectHtml += `<option value="${pkg.name}">${pkg.name} - ${pkg.price}</option>`;
+      });
+      pkgContainer.innerHTML = pkgHtml;
+      pkgSelect.innerHTML = selectHtml;
+
+      // Gallery Initial Render
+      filterGallery('Semua', document.querySelector('.filter-btn.active'));
+
+      // Testimoni (Static Mock)
+      const testiContainer = document.getElementById("client-testi-container");
+      testiContainer.innerHTML = `
+        <div class="testi-card">
+          <i class="fa-solid fa-quote-left"></i>
+          <p>"Dekorasinya sangat luar biasa! Melebihi ekspektasi kami. Warna emas dan pink pastelnya sangat menyatu dan elegan."</p>
+          <div class="testi-author">
+            <img src="https://i.pravatar.cc/100?img=1" alt="User">
+            <div><h4>Sarah & Dimas</h4><p>Paket Gold</p></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <i class="fa-solid fa-quote-left"></i>
+          <p>"Tim sangat profesional dan tepat waktu. Paket Platinum benar-benar menyulap venue kami menjadi istana semalam."</p>
+          <div class="testi-author">
+            <img src="https://i.pravatar.cc/100?img=2" alt="User">
+            <div><h4>Rina & Rio</h4><p>Paket Platinum</p></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterGallery(category, btnElement = null) {
+      // Update Active Button
+      if(btnElement) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+      }
+
+      // Filter Data
+      const filtered = category === 'Semua' ? packagesData : packagesData.filter(p => p.category === category);
+      
+      const galContainer = document.getElementById("client-gallery-container");
+      let galHtml = "";
+      filtered.forEach(pkg => {
+        galHtml += `
+          <div class="gallery-item">
+            <img src="${pkg.img}" alt="${pkg.category}">
+            <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+        `;
+      });
+      galContainer.innerHTML = galHtml;
+    }
+
+    // --- RENDER ADMIN ---
+    function renderAdmin() {
+      // Stats
+      document.getElementById('stat-booking').innerText = bookingsData.length;
+      document.getElementById('stat-package').innerText = packagesData.length;
+      document.getElementById('stat-customer').innerText = bookingsData.length;
+
+      // Packages Table
+      let pTable = "";
+      packagesData.forEach(p => {
+        pTable += `<tr>
+          <td><img src="${p.img}" width="50" style="border-radius:4px;"></td>
+          <td>${p.name}</td>
+          <td><span class="badge" style="background:#e5e7eb; color:#374151;">${p.category}</span></td>
+          <td>${p.price}</td>
+          <td>${p.features.length} Item</td>
+          <td class="admin-actions">
+            <button title="Edit" onclick="editPackage(${p.id})"><i class="fa-solid fa-edit"></i></button>
+            <button title="Hapus" class="btn-delete" onclick="deletePackage(${p.id})"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>`;
+      });
+      document.getElementById("admin-packages-tbody").innerHTML = pTable;
+
+      // Bookings Table
+      let bTable = "";
+      bookingsData.forEach(b => {
+        let badgeClass = b.status === "Disetujui" ? "badge-approved" : "badge-pending";
+        bTable += `<tr>
+          <td>${b.id}</td>
+          <td>${b.name}</td>
+          <td>${b.date}</td>
+          <td>${b.package}</td>
+          <td><span class="badge ${badgeClass}">${b.status}</span></td>
+          <td class="admin-actions">
+            <button title="Lihat" onclick="viewBooking('${b.id}')"><i class="fa-solid fa-eye"></i></button>
+            <button title="Cetak" onclick="window.print()"><i class="fa-solid fa-print"></i></button>
+          </td>
+        </tr>`;
+      });
+      document.getElementById("admin-bookings-tbody").innerHTML = bTable;
+
+      initChart();
+    }
+
+    // --- ADMIN CRUD LOGIC ---
+    function openPackageModal() {
+      document.getElementById('form-package').reset();
+      document.getElementById('pkg-id').value = '';
+      document.getElementById('packageModalTitle').innerText = 'Tambah Paket';
+      document.getElementById('packageModal').classList.add('active');
+    }
+
+    function closeModals() {
+      document.getElementById('packageModal').classList.remove('active');
+      document.getElementById('bookingModal').classList.remove('active');
+    }
+
+    function savePackage(e) {
+      e.preventDefault();
+      const id = document.getElementById('pkg-id').value;
+      const name = document.getElementById('pkg-name').value;
+      const category = document.getElementById('pkg-category').value;
+      const price = document.getElementById('pkg-price').value;
+      const img = document.getElementById('pkg-img').value;
+      const featuresStr = document.getElementById('pkg-features').value;
+      const features = featuresStr.split(',').map(f => f.trim()).filter(f => f);
+
+      if (id) {
+        // Edit
+        const idx = packagesData.findIndex(p => p.id == id);
+        if(idx > -1) {
+          packagesData[idx] = { ...packagesData[idx], name, category, price, img, features };
+        }
+      } else {
+        // Add
+        const newId = packagesData.length ? Math.max(...packagesData.map(p => p.id)) + 1 : 1;
+        packagesData.push({ id: newId, name, category, price, img, features });
+      }
+
+      closeModals();
+      renderAdmin();
+      renderClient();
+      alert("Data paket berhasil disimpan!");
+    }
+
+    function editPackage(id) {
+      const pkg = packagesData.find(p => p.id == id);
+      if(!pkg) return;
+      document.getElementById('pkg-id').value = pkg.id;
+      document.getElementById('pkg-name').value = pkg.name;
+      document.getElementById('pkg-category').value = pkg.category || 'Modern';
+      document.getElementById('pkg-price').value = pkg.price;
+      document.getElementById('pkg-img').value = pkg.img;
+      document.getElementById('pkg-features').value = pkg.features.join(', ');
+      document.getElementById('packageModalTitle').innerText = 'Edit Paket';
+      document.getElementById('packageModal').classList.add('active');
+    }
+
+    function deletePackage(id) {
+      if(confirm("Yakin ingin menghapus paket ini?")) {
+        packagesData = packagesData.filter(p => p.id != id);
+        renderAdmin();
+        renderClient();
+      }
+    }
+
+    function viewBooking(id) {
+      const b = bookingsData.find(x => x.id == id);
+      if(!b) return;
+      const detailsHtml = `
+        <p><strong>ID Booking:</strong> ${b.id}</p>
+        <p><strong>Nama Pelanggan:</strong> ${b.name}</p>
+        <p><strong>Tanggal Acara:</strong> ${b.date}</p>
+        <p><strong>Paket Pilihan:</strong> ${b.package}</p>
+        <p><strong>Status:</strong> ${b.status}</p>
+      `;
+      document.getElementById('bookingDetails').innerHTML = detailsHtml;
+      document.getElementById('bookingModal').classList.add('active');
+    }
+
+    // --- CHART LOGIC ---
+    let chartInst = null;
+    function initChart() {
+      if(chartInst) return;
+      const ctx = document.getElementById('bookingChart');
+      if(!ctx) return;
+      chartInst = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'Jumlah Booking',
+            data: [12, 19, 15, 25, 22, 30, 28],
+            borderColor: '#D4AF37',
+            backgroundColor: 'rgba(212, 175, 55, 0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    // --- NAVIGATION LOGIC ---
+    function showAdmin() {
+      const sandi = prompt("Masukkan sandi admin:");
+      if (sandi !== "sugit12345") {
+        alert("Sandi salah!");
+        return;
+      }
+      document.getElementById('client-app').classList.add('d-none');
+      document.getElementById('admin-app').classList.remove('d-none');
+      renderAdmin();
+      showAdminSection('dashboard', document.querySelector('.admin-menu a'));
+    }
+
+    function showClient() {
+      document.getElementById('admin-app').classList.add('d-none');
+      document.getElementById('client-app').classList.remove('d-none');
+      window.scrollTo(0,0);
+    }
+
+    function showAdminSection(sectionId, btnElement = null) {
+      document.getElementById('admin-section-dashboard').classList.add('d-none');
+      document.getElementById('admin-section-packages').classList.add('d-none');
+      document.getElementById('admin-section-bookings').classList.add('d-none');
+      document.getElementById('admin-section-customers').classList.add('d-none');
+      
+      if(btnElement) {
+        document.querySelectorAll('.admin-menu a').forEach(el => el.classList.remove('active'));
+        btnElement.classList.add('active');
+      }
+
+      document.getElementById(`admin-section-${sectionId}`).classList.remove('d-none');
+    }
+
+    // --- CLIENT ACTIONS ---
+    function submitBooking(e) {
+      e.preventDefault();
+      alert("Booking berhasil dikirim! Kami akan segera menghubungi Anda melalui WhatsApp.");
+      e.target.reset();
+    }
+
+    // --- INIT ---
+    window.onload = () => {
+      renderClient();
+    };
+  </script>
+</body>
+</html>
